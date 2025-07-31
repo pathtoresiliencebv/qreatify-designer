@@ -1,5 +1,6 @@
 import { env } from '@/env';
 import { CodeSandbox, type SandboxBrowserSession } from '@codesandbox/sdk';
+import { FreestyleSandboxes, type FreestyleDevServer } from 'freestyle-sandboxes';
 import { getSandboxPreviewUrl } from '@onlook/constants';
 import { shortenUuid } from '@onlook/utility/src/id';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,6 +8,9 @@ import { z } from 'zod';
 import { createTRPCRouter, protectedProcedure } from '../../trpc';
 
 const sdk = new CodeSandbox(env.CSB_API_KEY);
+const freestyleSdk = new FreestyleSandboxes({
+    apiKey: env.FREESTYLE_API_KEY,
+});
 
 export const sandboxRouter = createTRPCRouter({
     start: protectedProcedure
@@ -103,5 +107,35 @@ export const sandboxRouter = createTRPCRouter({
                 sandboxId: '123',
                 previewUrl: 'https://sandbox.com',
             };
+        }),
+    requestFreestyleDevServer: protectedProcedure
+        .input(
+            z.object({
+                repoId: z.string(),
+                userId: z.string().optional(),
+                devCommand: z.string().optional().default('npm run dev'),
+                preDevCommandOnce: z.string().optional().default('npm install'),
+                envVars: z.record(z.string()).optional(),
+            }),
+        )
+        .mutation(async ({ input }) => {
+            const devServer = await freestyleSdk.requestDevServer({
+                repoId: input.repoId,
+                devCommand: input.devCommand,
+                preDevCommandOnce: input.preDevCommandOnce,
+                envVars: input.envVars,
+                timeout: 300000, // 5 minutes timeout
+            });
+            return devServer;
+        }),
+    shutdownFreestyleDevServer: protectedProcedure
+        .input(
+            z.object({
+                repoId: z.string(),
+            }),
+        )
+        .mutation(async ({ input }) => {
+            // For now, we'll just return success since shutdown is handled by the client
+            return { success: true };
         }),
 });

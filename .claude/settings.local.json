@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun:*)",
+      "Bash(docker:*)",
+      "Bash(node:*)",
+      "Bash(npx supabase:*)",
+      "WebFetch(domain:docs.freestyle.sh)",
+      "WebFetch(domain:www.npmjs.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(timeout 10s bun --filter @onlook/web dev:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(npx tsc:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}

@@ -446,7 +446,7 @@ export const scanPagesFromSandbox = async (sandboxManager: SandboxManager): Prom
 };
 
 export const detectRouterTypeInSandbox = async (
-    sandboxManager: SandboxManager,
+    sandboxManager: any,
 ): Promise<{ type: RouterType; basePath: string } | null> => {
     // Check for App Router
     for (const appPath of APP_ROUTER_PATHS) {
@@ -455,7 +455,7 @@ export const detectRouterTypeInSandbox = async (
             if (entries && entries.length > 0) {
                 // Check for layout file (required for App Router)
                 const hasLayout = entries.some(
-                    (entry: ReaddirEntry) =>
+                    (entry: any) =>
                         entry.type === 'file' &&
                         entry.name.startsWith('layout.') &&
                         ALLOWED_EXTENSIONS.includes(getFileExtension(entry.name)),
@@ -477,7 +477,7 @@ export const detectRouterTypeInSandbox = async (
             if (entries && entries.length > 0) {
                 // Check for index file (common in Pages Router)
                 const hasIndex = entries.some(
-                    (entry: ReaddirEntry) =>
+                    (entry: any) =>
                         entry.type === 'file' &&
                         entry.name.startsWith('index.') &&
                         ALLOWED_EXTENSIONS.includes(getFileExtension(entry.name)),

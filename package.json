@@ -46,5 +46,8 @@
         "extract-zip": "^2.0.1",
         "husky": "^9.1.6"
     },
-    "packageManager": "bun@1.2.13"
+    "packageManager": "bun@1.2.13",
+    "dependencies": {
+        "freestyle-sandboxes": "^0.0.92"
+    }
 }
