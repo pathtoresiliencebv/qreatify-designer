@@ -12,7 +12,13 @@
       "Bash(pkill:*)",
       "Bash(true)",
       "Bash(npx tsc:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git push:*)",
+      "Bash(vercel:*)",
+      "Bash(ls:*)",
+      "Bash(npm view:*)",
+      "Bash(npm search:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }
