@@ -3,7 +3,7 @@
 import { useStateManager } from '@/components/store/state';
 import { api } from '@/trpc/react';
 import { Routes } from '@/utils/constants';
-import { createClient } from '@/utils/supabase/client';
+import { useClerk } from '@clerk/nextjs';
 import { Links } from '@onlook/constants';
 import { Avatar, AvatarFallback, AvatarImage } from '@onlook/ui/avatar';
 import { Button } from '@onlook/ui/button';
@@ -21,7 +21,7 @@ import { UsageSection } from './plans';
 
 export const CurrentUserAvatar = ({ className }: { className?: string }) => {
     const stateManager = useStateManager();
-    const supabase = createClient();
+    const { signOut } = useClerk();
     const router = useRouter();
 
     const { data: user } = api.user.get.useQuery();
@@ -29,7 +29,7 @@ export const CurrentUserAvatar = ({ className }: { className?: string }) => {
     const [open, setOpen] = useState(false);
 
     const handleSignOut = async () => {
-        await supabase.auth.signOut();
+        await signOut();
         router.push(Routes.LOGIN);
     };
 

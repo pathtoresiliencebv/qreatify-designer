@@ -1,6 +1,6 @@
 'use client';
 
-import { login } from '@/app/login/actions';
+import { checkAuthAndRedirect } from '@/app/login/actions';
 import { api as clientApi } from '@/trpc/client';
 import { api } from '@/trpc/react';
 import { Routes } from '@/utils/constants';
@@ -152,7 +152,7 @@ export const ImportGithubProjectProvider: React.FC<ImportGithubProjectProviderPr
     const nextStep = async () => {
         if (currentStep < totalSteps - 1) {
             if (!isGitHubConnected) {
-                await login(SignInMethod.GITHUB);
+                await checkAuthAndRedirect();
             }
             setCurrentStep((prev) => prev + 1);
         } else {

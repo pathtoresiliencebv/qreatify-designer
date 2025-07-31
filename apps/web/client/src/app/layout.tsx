@@ -13,6 +13,7 @@ import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { ThemeProvider } from './_components/theme';
 import { AuthProvider } from './auth/auth-context';
+import { ClerkProvider } from '@clerk/nextjs';
 import { faqSchema, organizationSchema } from './seo';
 
 const isProduction = env.NODE_ENV === 'production';
@@ -74,25 +75,27 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 {isProduction && (
                     <Script src="https://z.onlook.com/cdn-cgi/zaraz/i.js" strategy="lazyOnload" />
                 )}
-                <TRPCReactProvider>
-                    <FeatureFlagsProvider>
-                        <PostHogProvider>
-                            <ThemeProvider
-                                attribute="class"
-                                forcedTheme="dark"
-                                enableSystem
-                                disableTransitionOnChange
-                            >
-                                <AuthProvider>
-                                    <NextIntlClientProvider>
-                                        {children}
-                                        <Toaster />
-                                    </NextIntlClientProvider>
-                                </AuthProvider>
-                            </ThemeProvider>
-                        </PostHogProvider>
-                    </FeatureFlagsProvider>
-                </TRPCReactProvider>
+                <ClerkProvider>
+                    <TRPCReactProvider>
+                        <FeatureFlagsProvider>
+                            <PostHogProvider>
+                                <ThemeProvider
+                                    attribute="class"
+                                    forcedTheme="dark"
+                                    enableSystem
+                                    disableTransitionOnChange
+                                >
+                                    <AuthProvider>
+                                        <NextIntlClientProvider>
+                                            {children}
+                                            <Toaster />
+                                        </NextIntlClientProvider>
+                                    </AuthProvider>
+                                </ThemeProvider>
+                            </PostHogProvider>
+                        </FeatureFlagsProvider>
+                    </TRPCReactProvider>
+                </ClerkProvider>
             </body>
         </html>
     );
