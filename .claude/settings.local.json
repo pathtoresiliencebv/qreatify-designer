@@ -18,7 +18,9 @@
       "Bash(ls:*)",
       "Bash(npm view:*)",
       "Bash(npm search:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(grep:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }
