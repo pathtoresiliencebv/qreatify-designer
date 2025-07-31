@@ -69,8 +69,8 @@ export const env = createEnv({
         RESEND_API_KEY: process.env.RESEND_API_KEY,
         NEXT_PUBLIC_FEATURE_COLLABORATION: process.env.NEXT_PUBLIC_FEATURE_COLLABORATION,
 
-        // Supabase
-        SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL,
+        // Supabase - handle nested format from Vercel
+        SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL?.replace(/^POSTGRES_URL="(.*)"$/, '$1') || process.env.SUPABASE_DATABASE_URL,
         NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
         NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
         NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
@@ -118,7 +118,7 @@ export const env = createEnv({
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
      * useful for Docker builds.
      */
-    skipValidation: !!process.env.SKIP_ENV_VALIDATION || process.env.NODE_ENV === 'production',
+    skipValidation: !!process.env.SKIP_ENV_VALIDATION || process.env.NODE_ENV === 'production' || process.env.VERCEL === '1',
     /**
      * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
      * `SOME_VAR=''` will throw an error.
