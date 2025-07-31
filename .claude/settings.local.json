@@ -24,7 +24,10 @@
       "Bash(rm:*)",
       "WebFetch(domain:onlook-1ex8gxi5e-jasons-projects-3108a48b.vercel.app)",
       "Bash(npm run typecheck:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(gh repo create:*)",
+      "Bash(git remote add:*)",
+      "Bash(git rev-list:*)"
     ],
     "deny": []
   }
