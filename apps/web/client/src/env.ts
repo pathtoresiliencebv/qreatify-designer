@@ -8,8 +8,8 @@ export const env = createEnv({
      */
     server: {
         NODE_ENV: z.enum(['development', 'test', 'production']),
-        CSB_API_KEY: z.string(),
-        SUPABASE_DATABASE_URL: z.string().url(),
+        CSB_API_KEY: z.string().optional(),
+        SUPABASE_DATABASE_URL: z.string().url().optional(),
         RESEND_API_KEY: z.string().optional(),
         FREESTYLE_API_KEY: z.string().optional(),
 
@@ -32,7 +32,7 @@ export const env = createEnv({
         GOOGLE_PRIVATE_KEY_ID: z.string().optional(),
 
         // Model providers
-        ANTHROPIC_API_KEY: z.string(),
+        ANTHROPIC_API_KEY: z.string().optional(),
         OPENROUTER_API_KEY: z.string().optional(),
         GOOGLE_AI_STUDIO_API_KEY: z.string().optional(),
         OPENAI_API_KEY: z.string().optional(),
@@ -50,7 +50,7 @@ export const env = createEnv({
      * `NEXT_PUBLIC_`.
      */
     client: {
-        NEXT_PUBLIC_SITE_URL: z.string().url().default('http://localhost:3000'),
+        NEXT_PUBLIC_SITE_URL: z.string().url().optional().default('http://localhost:3000'),
         NEXT_PUBLIC_SUPABASE_URL: z.string(),
         NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string(),
         NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
