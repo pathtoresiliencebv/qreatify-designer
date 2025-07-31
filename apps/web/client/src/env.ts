@@ -70,7 +70,13 @@ export const env = createEnv({
         NEXT_PUBLIC_FEATURE_COLLABORATION: process.env.NEXT_PUBLIC_FEATURE_COLLABORATION,
 
         // Supabase - handle nested format from Vercel
-        SUPABASE_DATABASE_URL: process.env.SUPABASE_DATABASE_URL?.replace(/^POSTGRES_URL="(.*)"$/, '$1') || process.env.SUPABASE_DATABASE_URL,
+        SUPABASE_DATABASE_URL: (() => {
+            const url = process.env.SUPABASE_DATABASE_URL;
+            if (!url) return undefined;
+            // Handle nested format: POSTGRES_URL="actual_url"
+            const match = url.match(/^POSTGRES_URL="(.*)"$/);
+            return match ? match[1] : url;
+        })(),
         NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
         NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
         NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
