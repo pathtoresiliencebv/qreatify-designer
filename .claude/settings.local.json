@@ -27,7 +27,8 @@
       "Bash(npm run lint)",
       "Bash(gh repo create:*)",
       "Bash(git remote add:*)",
-      "Bash(git rev-list:*)"
+      "Bash(git rev-list:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": []
   }
