@@ -8,12 +8,15 @@ export async function updateSession(request: NextRequest) {
     });
 
     try {
-        const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-        const supabaseKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+        // Skip Supabase auth if environment variables are not properly set
+        if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+            console.warn('Supabase environment variables not set, skipping auth middleware');
+            return supabaseResponse;
+        }
         
         const supabase = createServerClient(
-            supabaseUrl,
-            supabaseKey,
+            env.NEXT_PUBLIC_SUPABASE_URL,
+            env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
             {
                 cookies: {
                     getAll() {

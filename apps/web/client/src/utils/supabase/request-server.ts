@@ -5,12 +5,13 @@ import { type NextRequest } from "next/server";
 export async function createClient(request: NextRequest) {
     // Create a server's supabase client with newly configured cookie,
     // which could be used to maintain user's session
-    const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
-    const supabaseKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+    if (!env.NEXT_PUBLIC_SUPABASE_URL || !env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+        throw new Error('Supabase environment variables not configured');
+    }
     
     return createServerClient(
-        supabaseUrl,
-        supabaseKey,
+        env.NEXT_PUBLIC_SUPABASE_URL,
+        env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
         {
             cookies: {
                 getAll() {
