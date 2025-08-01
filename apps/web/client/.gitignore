@@ -47,3 +47,5 @@ yarn-error.log*
 
 # Ignore preload script changes unless the script should be updated. Uncomment to update.
 /public/onlook-preload-script.js
+# clerk configuration (can include secrets)
+/.clerk/

@@ -5,9 +5,12 @@ import { type NextRequest } from "next/server";
 export async function createClient(request: NextRequest) {
     // Create a server's supabase client with newly configured cookie,
     // which could be used to maintain user's session
+    const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+    const supabaseKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+    
     return createServerClient(
-        env.NEXT_PUBLIC_SUPABASE_URL,
-        env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        supabaseUrl,
+        supabaseKey,
         {
             cookies: {
                 getAll() {

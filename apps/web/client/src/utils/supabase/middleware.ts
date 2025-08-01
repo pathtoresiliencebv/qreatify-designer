@@ -8,9 +8,12 @@ export async function updateSession(request: NextRequest) {
     });
 
     try {
+        const supabaseUrl = env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co';
+        const supabaseKey = env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'placeholder-key';
+        
         const supabase = createServerClient(
-            env.NEXT_PUBLIC_SUPABASE_URL,
-            env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+            supabaseUrl,
+            supabaseKey,
             {
                 cookies: {
                     getAll() {
