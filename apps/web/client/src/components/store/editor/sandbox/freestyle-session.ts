@@ -36,13 +36,27 @@ export class FreestyleSessionManager {
 
     constructor(private readonly editorEngine: EditorEngine) {
         makeAutoObservable(this);
-        this.client = new FreestyleSandboxes();
+        // Only initialize FreestyleSandboxes if API key is available
+        try {
+            this.client = new FreestyleSandboxes();
+        } catch (error) {
+            console.warn('FreestyleSandboxes initialization failed - likely missing API key:', error);
+            // Create a no-op client to prevent crashes
+            this.client = {} as FreestyleSandboxes;
+        }
     }
 
     async start(repoId: string, userId?: string) {
         if (this.isConnecting || this.server) {
             return;
         }
+        
+        // Check if client is properly initialized
+        if (!this.client || Object.keys(this.client).length === 0) {
+            console.warn('FreestyleSandboxes client not initialized - skipping start');
+            return;
+        }
+        
         this.isConnecting = true;
         
         try {
